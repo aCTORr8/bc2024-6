@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  server:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+    command: npm start -- -h 0.0.0.0 -p 8800 -c ./cache
+    ports:
+      - 8800:8800
+    volumes:
+      - ./cache:/usr/src/app/cache
