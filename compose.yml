@@ -5,8 +5,9 @@ services:
       context: .
     environment:
       NODE_ENV: production
-    command: npm start -- -h 0.0.0.0 -p 8800 -c ./cache
+    command: npx nodemon --inspect=0.0.0.0:9229 index.js -- -h 0.0.0.0 -p 8800 -c ./cache
     ports:
-      - 8800:8800
+      - "8800:8800"
+      - "9229:9229"
     volumes:
       - ./cache:/usr/src/app/cache

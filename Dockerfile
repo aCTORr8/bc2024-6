@@ -2,7 +2,10 @@
 ARG NODE_VERSION=20.17.0
 FROM node:${NODE_VERSION}-alpine
 
+COPY package.json package-lock.json ./ 
+
 ENV NODE_ENV production
+
 WORKDIR /usr/src/app
 
 RUN --mount=type=bind,source=package.json,target=package.json \
@@ -13,6 +16,10 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 RUN mkdir -p /usr/src/app/cache && chown -R node:node /usr/src/app/cache
 
 USER node
+
 COPY . .
+
 EXPOSE 8800
-CMD ["npm", "start", "--", "-h", "0.0.0.0", "-p", "8800", "-c", "./cache"]
+EXPOSE 9229
+
+CMD ["npx", "nodemon", "--inspect=0.0.0.0:9229", "index.js", "--", "-h", "0.0.0.0", "-p", "8800", "-c", "./cache"]
